@@ -1,4 +1,4 @@
-name: Build Python extension wheels
+name: Build Python package
 
 on:
   push:
@@ -9,14 +9,8 @@ permissions:
   contents: read
 
 jobs:
-  build_wheels:
-    name: Build wheels (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
+  build_package:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -24,14 +18,14 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.22.0
-        env:
-          CIBW_BUILD: "cp3*-*"
-          CIBW_SKIP: "*-musllinux_* pp* *-win32"
+      - name: Install build
+        run: python -m pip install --upgrade build
+
+      - name: Build package
+        run: python -m build
 
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.os }}
-          path: ./wheelhouse/*.whl
+          name: python-package
+          path: dist/*
           if-no-files-found: error
