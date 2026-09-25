@@ -1,0 +1,52 @@
+import ezpy
+
+running = "yes"
+
+repeat while running == "yes":
+    printf("\n==============================")
+    printf("   EZPY INTERACTIVE TEST MENU")
+    printf("==============================")
+    printf("1. Test printf formatting")
+    printf("2. Test repeat loop")
+    printf("3. Test ask input")
+    printf("4. Test inequality (isnt)")
+    printf("5. Test guard clause (fails)")
+    printf("6. Exit")
+
+    ask "\nSelect a test number (1-6): " -> choice
+
+    if choice == "1":
+        printf("\n>>> Running Test 1: printf")
+        item = "Widget"
+        price = 19.99
+        printf("Bought {item} for ${price}!")
+
+    elif choice == "2":
+        printf("\n>>> Running Test 2: repeat loop")
+        repeat 3 times:
+            printf("   - Loop pulse tick...")
+
+    elif choice == "3":
+        printf("\n>>> Running Test 3: ask input")
+        ask "What is your hobby? " -> user_hobby
+        printf("That's awesome, {user_hobby} is a fun hobby!")
+
+    elif choice == "4":
+        printf("\n>>> Running Test 4: isnt comparison")
+        if print("hello") isnt print("world"):
+            printf("   - Success: 'hello' and 'world' do not match!")
+
+    elif choice == "5":
+        printf("\n>>> Running Test 5: fails guard clause")
+        if int("not-a-number") fails:
+            printf("   - Success: Caught invalid integer conversion error!")
+
+    elif choice == "6":
+        printf("\nExiting interactive runner. Goodbye!")
+        running = "no"
+
+    else:
+        printf("\n[!] Invalid choice. Please pick 1 through 6.")
+
+    if running == "yes":
+        ask "\nWould you like to perform another test? (yes/no): " -> running
